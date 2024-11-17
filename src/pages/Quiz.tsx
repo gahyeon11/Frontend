@@ -8,6 +8,8 @@ import { theme } from "../styles/theme";
 import { useQuizzes } from "../hooks/useQuizzes";
 import HintModal from "../components/quiz/HintModal";
 import { useNavigate } from "react-router-dom";
+import { useAnswer } from "../hooks/useAnswer";
+import { useSaveQuizResult } from "../hooks/useSaveQuizResult";
 
 function Quiz() {
   const [currentScore, setCurrentScore] = useState<number>(10);
@@ -19,6 +21,8 @@ function Quiz() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [timeLeft, setTimeLeft] = useState<number>(15);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [answer, setAnswer] = useState("");
+  const { loading, error, isCorrectAnswer, correctAnswer, submitAnswer } = useAnswer();
 
   const currentQuiz = quizzes[currentIndex];
 
@@ -28,6 +32,26 @@ function Quiz() {
   };
   const [isCorrect, setIsCorrect] = useState<string>(theme.color.grey4);
   const [resultText, setResultText] = useState<string>("");
+  const [correctRate, setCorrectRate] = useState<number>(0);
+ 
+  const saveQuizResult = useSaveQuizResult(); 
+
+  useEffect(() => {
+    if (currentQuiz && currentQuiz.quizAnswerStats) {
+      const correctAnswersCount = currentQuiz.quizAnswerStats.correctAnswersCount;
+      const totalAttempts = currentQuiz.quizAnswerStats.totalAttemptsUntilFirstCorrectAnswer;
+      if (totalAttempts > 0) {
+        setCorrectRate((correctAnswersCount / totalAttempts) * 100);
+      } else {
+        setCorrectRate(0);
+      }
+    } else {
+      // currentQuiz나 quizAnswerStats가 없을 때 예외 처리
+      setCorrectRate(0);
+      console.warn("currentQuiz 또는 quizAnswerStats가 정의되지 않았습니다.");
+    }
+  }, [currentQuiz]);
+
 
   // 타이머 시작
   useEffect(() => {
@@ -49,9 +73,11 @@ function Quiz() {
     };
   }, [timeLeft]);
 
-  const handleTimeOut = () => {
+  const handleTimeOut = async () => {
     setIsCorrect(theme.color.red);
     setResultText("오답!");
+    await submitAnswer(currentQuiz.quizId, answer);
+    saveQuizResult(1, 0, currentQuiz.quizId);
   };
 
   // 새로고침 및 뒤로가기 시 메인 화면으로 이동
@@ -142,18 +168,25 @@ function Quiz() {
   if (!quizzes || quizzes.length === 0) {
     return <p>퀴즈를 불러오는 중...</p>;
   }
-  const onSubmitAnswer = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onSubmitAnswer = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     const value = inputText;
     if (event.key === "Enter" && resultText === "") {
       if (value === "") {
         alert("답 입력 후 엔터를 눌러주세요.");
-      } else if (value === currentQuiz.word) {
-        setIsCorrect(theme.color.green);
-        setResultText("정답!");
-        setTotalScore((state) => state + currentScore);
       } else {
-        setIsCorrect(theme.color.red);
-        setResultText("오답!");
+        const response = await submitAnswer(currentQuiz.quizId, value);
+        if(response){
+          if(response.isCorrectAnswer){
+            saveQuizResult(1, 10, currentQuiz.quizId);
+            setIsCorrect(theme.color.green);
+            setResultText("정답!");
+            setTotalScore((state) => state + currentScore);
+          }else{
+            saveQuizResult(1, 0, currentQuiz.quizId);
+            setIsCorrect(theme.color.red);
+            setResultText("오답!");
+          }
+        }
       }
     }
   };
@@ -170,7 +203,7 @@ function Quiz() {
         </div>
       </div>
       <div className="infoContainer">
-        <span>정답률: {65}%</span>
+        <span>정답률: {correctRate}%</span>
         <TimeContainer>
           <StyledClockIcon />
           <span>{timeLeft}</span>
@@ -210,7 +243,7 @@ function Quiz() {
       </div>
       {resultText && (
         <ResultBox isCorrect={isCorrect === theme.color.green}>
-          {resultText === "오답!" ? `답 : ${currentQuiz.word}` : "정답"}
+          {resultText === "오답!" ? `답 : ${correctAnswer}` : "정답"}
         </ResultBox>
       )}
     </QuizWrapper>
@@ -220,7 +253,7 @@ function Quiz() {
 export default Quiz;
 
 const QuizWrapper = styled.div`
-  height: 80%;
+  height: 783px;
   text-align: center;
   .quizButton {
     position: relative;
@@ -309,6 +342,7 @@ const QuizWrapper = styled.div`
     justify-content: center;
   }
 `;
+
 const TimeContainer = styled.div`
   display: flex;
   align-items: center;
@@ -349,6 +383,7 @@ const QuizInput = styled.input<{ isCorrect: string; value: string }>`
   text-align: center;
   outline: none;
 `;
+
 const ResultBox = styled.div<{ isCorrect: boolean }>`
   display: flex;
   justify-content: center;
@@ -365,6 +400,7 @@ const ResultBox = styled.div<{ isCorrect: boolean }>`
   margin: 0 auto; /* 가운데 정렬 */
   margin-top: 1rem; /* 상단 여백 추가 */
 `;
+
 const HintWrapper = styled.div`
   position: relative;
 `;

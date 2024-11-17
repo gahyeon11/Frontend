@@ -13,7 +13,7 @@ function QuizResult() {
   const totalScore = location.state?.totalScore || 0;
   const totalQuestions = location.state?.totalQuestions || 0;
 
-  useSaveQuizResult(totalQuestions, totalScore);
+  //useSaveQuizResult(totalQuestions, totalScore);
 
   const handleRankButtonClick = () => {
     if (isLoggedIn) {
