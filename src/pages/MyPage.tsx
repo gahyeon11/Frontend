@@ -74,7 +74,8 @@ const MyPage = () => {
               <Challenge className="Challenge" />
               <p>Challenge</p>
             </BoxText>
-            <h1>{userRank?.totalQuizCount} 회</h1>
+            {/* <h1>{userRank?.totalQuizCount} 회</h1> */}
+            <h1>n 회</h1>
           </Box>
           <Box>
             <BoxText>
@@ -88,7 +89,7 @@ const MyPage = () => {
               <Score className="Score" />
               <p>Score</p>
             </BoxText>
-            <h1>{userRank?.totalQuizScore} 점</h1>
+            <h1>{userRank?.score} 점</h1>
           </Box>
         </BottomBoxes>
       </Bottom>
@@ -233,6 +234,7 @@ const Box = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 300px;
+  overflow: hidden;
 
   h1 {
     display: flex;

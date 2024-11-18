@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
-import { useAuthStore, getToken } from '../../store/authStore';
+import { useAuthStore, getToken, removeToken } from '../../store/authStore';
 import { useAuth } from '../../hooks/useAuth';
 
 const Header = () => {
@@ -10,12 +10,22 @@ const Header = () => {
   const { userLogout } = useAuth();
 
   useEffect(() => {
-    const token = getToken();
+    const token = getToken(); // 쿠키에서 토큰 가져오기
     if (token) {
-      storeLogin(token);
+      storeLogin(token); // 토큰이 있으면 로그인 상태로 전환
     } else {
-      storeLogout();
+      storeLogout(); // 토큰이 없으면 로그아웃 상태로 전환
     }
+
+    const handleBeforeUnload = () => {
+      removeToken(); // 창을 닫거나 새로고침할 때 토큰 삭제
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload); // beforeunload 이벤트 추가
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload); // 컴포넌트 언마운트 시 이벤트 제거
+    };
   }, [storeLogin, storeLogout]);
 
   return (

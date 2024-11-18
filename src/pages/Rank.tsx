@@ -79,7 +79,7 @@ const Rank = () => {
             <ScoreBox className="score-box">
               <h2>
                 나의 점수는&nbsp;
-                <span className="blue">{userRank.totalQuizScore}</span>점
+                <span className="blue">{userRank.score}</span>점
               </h2>
               <h3>
                 <span className="blue">{userRank.totalQuizCount}</span>문제 중&nbsp;
