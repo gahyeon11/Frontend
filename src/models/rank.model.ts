@@ -1,9 +1,10 @@
 export interface Rank {
   id: string;
   rank?: number;
-  totalQuizScore?: number;
+  score?: number;
   totalQuizCount?: number;
   totalSolvedQuizCount?: number;
+  chanllengeCount?: number;
 }
 
 export interface TopRank {
