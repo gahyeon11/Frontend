@@ -8,7 +8,7 @@ export const useRank = () => {
   const [nearRank, setNearRank] = useState<NearRank | null>(null);
   const [allRank, setAllRank] = useState<AllRank | null>(null);
   const [page, setPage] = useState<number>(1);
-  const limit = 4;
+  const limit = 10;
 
   const fetchUserData = async () => {
     try {

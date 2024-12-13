@@ -229,8 +229,11 @@ const Box = styled.div`
   border: 1px solid ${({ theme }) => theme.color.grey1};
   border-radius: 10px;
   padding: 20px;
-  height: 300px; /* 고정된 높이 */
-  width: 230px; /* 고정된 너비 */
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 300px;
+  overflow: hidden;
 
   h1 {
     display: flex;

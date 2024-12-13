@@ -103,7 +103,7 @@ const Join = () => {
           />
           <p className={`join-info ${isSubmitted && (errors.password ? 'invalid' : 'valid')}`}>
             <FiInfo className='icon-info' />
-            8~20자 영문 대/소문자, 숫자, 특수문자를 혼합하여 입력해주세요.
+            8~20자 영문 대/소문자, 숫자, 특수문자(?!@#$%)를 혼합하여 입력해주세요.
           </p>
         </fieldset>
         <fieldset>

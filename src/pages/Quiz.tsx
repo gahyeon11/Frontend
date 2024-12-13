@@ -16,6 +16,7 @@ function Quiz() {
   const [totalScore, setTotalScore] = useState<number>(0);
   const [progressNum, setProgressNum] = useState<number>(0);
   const { quizzes } = useQuizzes();
+  // console.log(quizzes);
   const [hintVisible, setHintVisible] = useState<boolean>(false);
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
