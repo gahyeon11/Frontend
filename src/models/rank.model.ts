@@ -4,6 +4,7 @@ export interface Rank {
   score?: number;
   totalQuizCount?: number;
   totalSolvedQuizCount?: number;
+  chanllengeCount?: number;
 }
 
 export interface TopRank {

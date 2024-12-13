@@ -22,6 +22,7 @@ const MyPage = () => {
   if (!isLoggedIn) {
     navigate("/users/login");
   }
+
   return (
     <Container>
       <Top>
@@ -30,11 +31,8 @@ const MyPage = () => {
           <Profile>
             <IoPersonCircle size={200} />
             <ProfileText>
-              <h2>{users?.id}</h2>
+              <h2>{users?.id || "사용자 정보 없음"}</h2>
               <div className="buttons">
-                {/* <Button size="short" schema="normal">
-                프로필 수정
-              </Button> */}
                 <Link to="/reset-password">
                   <Button size="short" schema="normal">
                     비밀번호 재설정
@@ -50,7 +48,7 @@ const MyPage = () => {
         <Rank>
           <h2>나의 랭킹</h2>
           <RankBox>
-            <p>{users?.myRank}위</p>
+            <p>{users?.myRank || 0}위</p>
             <Link to="/rank">
               <Button size="short" schema="normal">
                 랭킹 확인하러 가기
@@ -67,29 +65,28 @@ const MyPage = () => {
               <Quiz className="Quiz" />
               <p>Total Quiz</p>
             </BoxText>
-            <h1>{userRank?.totalQuizCount} 문제</h1>
+            <h1>{userRank?.totalQuizCount || 0} 문제</h1>
           </Box>
           <Box>
             <BoxText>
               <Challenge className="Challenge" />
               <p>Challenge</p>
             </BoxText>
-            {/* <h1>{userRank?.totalQuizCount} 회</h1> */}
-            <h1>n 회</h1>
+            <h1>{userRank?.chanllengeCount || 0} 회</h1>
           </Box>
           <Box>
             <BoxText>
               <Correct className="Correct" />
               <p>Correct Question</p>
             </BoxText>
-            <h1>{userRank?.totalSolvedQuizCount} 문제</h1>
+            <h1>{userRank?.totalSolvedQuizCount || 0} 문제</h1>
           </Box>
           <Box>
             <BoxText>
               <Score className="Score" />
               <p>Score</p>
             </BoxText>
-            <h1>{userRank?.score} 점</h1>
+            <h1>{userRank?.score || 0} 점</h1>
           </Box>
         </BottomBoxes>
       </Bottom>
@@ -221,12 +218,14 @@ const Bottom = styled.div`
 const BottomBoxes = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 50px;
+  gap: 20px;
 `;
 
 const Box = styled.div`
   display: flex;
-  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center; /* 내용 중앙 정렬 */
+  align-items: center;
   border: 1px solid ${({ theme }) => theme.color.grey1};
   border-radius: 10px;
   padding: 20px;
@@ -242,7 +241,7 @@ const Box = styled.div`
     align-items: center;
     font-size: 30px;
     font-weight: bold;
-    margin-bottom: 100px;
+    margin-bottom: 0; /* 고정된 레이아웃 유지 */
   }
 `;
 
@@ -256,33 +255,25 @@ const BoxText = styled.div`
 
   svg.Quiz,
   svg.Challenge,
-  svg.Correct,
   svg.Score {
     position: absolute;
     z-index: 1;
     padding: 5px;
+    margin-top: -200px;
+    margin-left: -60px;
   }
-
-  svg.Quiz {
-    margin: 10px 80px 0 0;
-  }
-
-  svg.Challenge {
-    margin: 10px 80px 0 0;
-  }
-
-  svg.Correct {
-    margin: 10px 120px 0 0;
-  }
-
-  svg.Score {
-    margin: 10px 40px 0 0;
+  svg.Correct{
+    position: absolute;
+    z-index: 1;
+    padding: 5px;
+    margin-top: -200px;
+    margin-left: -120px;
   }
 
   p {
     position: absolute;
     z-index: 2;
-    margin-top: 10px;
+    margin-top: -200px;
     color: #000000;
   }
 `;
