@@ -1,46 +1,126 @@
-# Getting Started with Create React App
+# DevSimpleQuiz
+#### 🪄 간단한 퀴즈를 풀며 어휘력을 늘려가는 서비스
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[👉 사이트 바로가기](https://devsimplequiz.site/)
 
-## Available Scripts
+<br/>
 
-In the project directory, you can run:
+## 📝 프로젝트 소개
+> 심심할 때, 짧은 시간 동안 재미있게 두뇌를 자극할 수 있는 퀴즈 게임입니다. 🐠 <br/>
+단어를 맞추는 간단한 퀴즈로 여가 시간을 즐겁게 보내세요 :)
+- 회원, 비회원 모두 퀴즈 풀기 기능을 이용할 수 있어요! 😎
+- 짧은 시간에 많은 단어를 살펴볼 수 있어요! 🙉
+- 해결한 퀴즈의 총 점수를 누적시켜 랭킹 순위권에 도전해보세요! 🥇
+- 나의 랭킹 및 1~3등, 나와 근접한 랭킹의 사용자를 확인할 수 있습니다. 🍀
 
-### `npm start`
+<br/>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🖥️ 프로젝트 기능
+### 🔗 홈
+- 로그인 여부에 따라 헤더가 달라집니다.
+- 퀴즈 풀기 페이지로 넘어가는 버튼이 있습니다.
+- 랭킹 확인 페이지로 넘어가는 버튼이 있습니다.
+- 자동으로 넘어가는 배너가 존재합니다.
+- 홈은 공통적으로 리다이렉션 되는 페이지 역할을 합니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+|로그인 되어있는 경우|![홈-로그인O-발표](https://github.com/user-attachments/assets/0b57157a-f51e-429c-b83f-8268e10642c2)|
+|:-:|:-:|
+|**로그인 안되어있는 경우**|![홈-로그인X-발표](https://github.com/user-attachments/assets/6e35e4fc-7899-4b5c-9d16-a527bf35f574)|
 
-### `npm test`
+<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🔗 회원가입
+- 아이디, 비밀번호, 비밀번호 확인 입력값을 받습니다.
+- 아이디 중복확인을 해야만 회원가입이 가능합니다.
+- 회원가입 조건
+  - 아이디 : `5~20자 영문 소문자, 숫자`
+  - 비밀번호 : `8~20자 영문 대/소문자, 숫자, 특수문자(?!@#$%)`
+  - 비밀번호 확인 : 위에서 입력한 비밀번호와 같아야 합니다.
+- 회원가입 조건에 맞지 않는 경우, 에러 메세지의 색상이 빨간색으로 바뀌게 됩니다.
+- 회원가입 조건에 맞게 입력해도 아이디 중복확인을 하지 않은 경우, 아이디 중복 확인을 한 후에 다시 회원가입 버튼을 눌러야 합니다.
 
-### `npm run build`
+|아이디 중복 확인 했을 경우|![회원가입-중복확인-발표](https://github.com/user-attachments/assets/097f8b9c-ddc9-4289-afd4-21f998c00fd5)|
+|:-:|:-:|
+|**아이디 중복 확인 안했을 경우**|![회원가입-중복확인X-발표](https://github.com/user-attachments/assets/60b7bdd8-6d52-4a90-9b9b-574b1ede5d14)|
+|**회원가입 조건에 충족하지 않았을 경우**|![회원가입-조건충족-발표](https://github.com/user-attachments/assets/82121834-2709-4107-863d-a112bd6f5fcf)|
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br/>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 🔗 로그인
+- 아이디, 비밀번호 입력값을 받습니다.
+- 회원가입 때 입력한 아이디와 비밀번호로 로그인 가능합니다.
+- 아이디 또는 비밀번호가 일치하지 않거나 정보가 없을 경우, `아이디 또는 비밀번호가 맞지 않습니다.` 라는 알림창이 뜹니다.
+- 아이디와 비밀번호 조건에 맞지 않게 입력했거나, 아무것도 입력하지 않고 로그인 버튼을 누르는 경우 각 입력란 아래에 에러문이 뜹니다.
+  - `아이디를 입력해주세요. (5~20자의 영문 소문자, 숫자)`
+  - `비밀번호를 입력해주세요. (8~20자의 영문 대/소문자, 숫자, 특수문자)`
+- 로그인을 완료했을 시 홈페이지로 넘어갑니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+|올바른 정보를 입력했을 경우|![로그인-성공-발표](https://github.com/user-attachments/assets/902d04cc-5537-4b9d-ab0f-26f9f8c78b27)|
+|:-:|:-:|
+|**틀리거나 없는 정보를 입력했을 경우**|![로그인-실패-발표](https://github.com/user-attachments/assets/552503c6-35ac-4360-802d-d640b6bf77e0)|
 
-### `npm run eject`
+<br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 🔗 퀴즈
+- 1세트 당 10문제이며, 1문제 당 10점입니다.
+- 진행도를 알려주는 프로그래스 바를 실시간으로 렌더링합니다.
+- 각 문제 당 초성 힌트가 제공됩니다.
+- input 란에 값을 입력하고 엔터를 누르면 답이 제출되면서 정답/오답 여부를 알려줍니다.
+- 오답일 경우 정답이 무엇인지 알려줍니다.
+- 마지막 문제를 풀고 다음으로 넘어가면 결과 페이지로 이동합니다.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+|초성 힌트 제공|![퀴즈-힌트-마우스오버-발표](https://github.com/user-attachments/assets/17695f99-2c13-4d88-b137-3aeebb0d1203)|
+|:-:|:-:|
+|**오답인 경우, 정답 제공**|![퀴즈-오답-발표](https://github.com/user-attachments/assets/69452929-af4f-45dc-940d-f2fbdabacba9)|
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+<br/>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 🔗 퀴즈 결과
+- 점수 및 문제 정보 표시 : 사용자가 푼 문제의 총 점수와 총 문제 수를 보여줍니다.
+  - 총 점수가 나의 랭킹을 산정하는 점수에 영향을 줍니다. (계속 누적됨)
+- 다시하기 버튼을 통해 사용자가 퀴즈를 다시 시작할 수 있도록 합니다.
+- 홈으로 이동 버튼을 통해 사용자가 홈 화면으로 돌아갈 수 있도록 합니다.
+- 랭킹 확인 버튼을 통해 로그인 상태에 따라 랭킹 페이지로 이동하거나, 로그인 페이지로 이동합니다.
 
-## Learn More
+|퀴즈 제출 후 결과 확인|![퀴즈결과-발표](https://github.com/user-attachments/assets/50ce0861-9b8b-42f9-8dfc-16f1725bb592)|
+|:-:|:-:|
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<br/>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 🔗 마이페이지
+- 비밀번호 재설정을 할 수 있는 링크를 제공합니다.
+- 로그인 상태를 확인하여 로그인하지 않은 사용자는 로그인 페이지로 리다이렉트됩니다.
+- 사용자 아이디, 랭킹, 푼 문제 수 등을 렌더링합니다.
+
+|마이페이지 (로그인 필수)|![마이페이지](https://github.com/user-attachments/assets/4e9773cb-4dd2-4661-9c7c-0b8e251e0fd4)|
+|:-:|:-:|
+
+<br/>
+
+### 🔗 비밀번호 재설정
+- 마이페이지에서만 이용할 수 있습니다.
+- 즉, 로그인 상태에서만 들어갈 수 있습니다.
+- 현재 비밀번호, 새 비밀번호, 새 비밀번호 확인 입력값을 받습니다.
+- 현재 비밀번호와 새 비밀번호가 같을 경우 "현재 비밀번호와 같은 비밀번호는 사용할 수 없습니다." 와 같은 에러문을 띄웁니다.
+- 설정하려는 새 비밀번호와 새 비밀번호 확인이 같아야 합니다.
+- 모든 입력란이 입력되기 전까지 [비밀번호 재설정] 버튼이 활성화되지 않습니다.
+- 비밀번호 재설정 완료 시 로그인 화면으로 넘어갑니다.
+
+|비밀번호 재설정 후 새 비밀번호로 로그인|![비밀번호-재설정-발표](https://github.com/user-attachments/assets/c613f5cc-8a7c-4c89-ba47-7c8e1cc2790e)|
+|:-:|:-:|
+
+<br/>
+
+## 🗓️ 개발 기간
+```
+2024.06.24 - 2024.07.16
+```
+
+<br/>
+
+## 🤍 팀원
+> 풀스택 데브코스 2기 team1
+
+|김가현 (FE)|안예린 (FE)|이다미 (FE)|임진호 (BE)|
+|:-:|:-:|:-:|:-:|
+|<img src="https://avatars.githubusercontent.com/u/117976216?v=4" width="150" height="150"/><br/>[@gahyeon11](https://github.com/gahyeon11)|<img src="https://avatars.githubusercontent.com/u/29669560?v=4" width="150" height="150"/><br/>[@yeah1832](https://github.com/yeah1832)|<img src="https://avatars.githubusercontent.com/u/58524208?v=4" width="150" height="150"/><br/>[@Dami-LEE00](https://github.com/Dami-LEE00)|<img src="https://avatars.githubusercontent.com/u/74135462?v=4" width="150" height="150"/><br/>[@Jake1152](https://github.com/Jake1152)|
